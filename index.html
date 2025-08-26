@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Mega XO</title>
+    <title>Mega XO - Platform Gaming</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pocketbase/0.21.3/pocketbase.umd.js"></script>
     <style>
         * {
@@ -20,6 +20,8 @@
             justify-content: center;
             align-items: center;
             position: relative;
+            overflow: hidden;
+            padding: 1rem;
         }
 
         body::before {
@@ -36,119 +38,157 @@
         .container {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            padding: 3rem;
-            border-radius: 25px;
+            width: 500px;
+            height: 500px;
+            border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            max-width: 450px;
-            width: 100%;
-            text-align: center;
             position: relative;
             z-index: 1;
+            overflow: hidden;
+            user-select: none;
         }
 
-        .logo {
-            font-size: 3rem;
+        .page-container {
+            display: flex;
+            width: 400%; /* 4 pages */
+            height: 100%;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page {
+            width: 25%; /* Each page takes 1/4 of container width */
+            height: 500px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Page 1 - Welcome */
+        .welcome-page {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .welcome-page .logo {
+            font-size: 2.5rem;
             font-weight: bold;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
-            letter-spacing: -2px;
-        }
-
-        .tagline {
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 2rem;
-            font-weight: 300;
-        }
-        
-        .login-page h1 {
-            color: #333;
             margin-bottom: 1rem;
-            font-size: 1.8rem;
-            font-weight: 600;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
-        .app-description {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            padding: 1.5rem;
-            border-radius: 15px;
-            margin-bottom: 2rem;
-            border-left: 4px solid #667eea;
-        }
-
-        .app-description h3 {
-            color: #495057;
-            margin-bottom: 0.8rem;
+        .welcome-page .tagline {
             font-size: 1.1rem;
-            font-weight: 600;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
         }
 
-        .app-description p {
-            color: #6c757d;
+        .welcome-page .description {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        /* Page 2 - Info */
+        .info-page {
+            background: white;
+            color: #333;
+        }
+
+        .info-page h2 {
+            color: #667eea;
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-page .info-text {
             font-size: 0.9rem;
             line-height: 1.6;
-            margin-bottom: 0.5rem;
+            color: #666;
+            margin-bottom: 1.5rem;
         }
 
-        .features {
-            display: flex;
-            justify-content: space-around;
-            margin: 1rem 0;
-            flex-wrap: wrap;
-            gap: 0.5rem;
+        .feature-list {
+            list-style: none;
+            text-align: left;
+            width: 100%;
+            max-width: 320px;
         }
 
-        .feature {
+        .feature-list li {
             display: flex;
-            align-items: center;
-            background: rgba(102, 126, 234, 0.1);
-            padding: 0.5rem 0.8rem;
-            border-radius: 20px;
+            align-items: flex-start;
+            margin: 0.8rem 0;
             font-size: 0.8rem;
-            color: #495057;
-            margin: 0.2rem;
+            color: #555;
+            line-height: 1.4;
         }
 
-        .feature span {
-            margin-right: 0.3rem;
+        .feature-list li span {
+            margin-right: 0.8rem;
+            font-size: 1rem;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
         }
-        
+
+        /* Page 3 - Login */
+        .login-page {
+            background: white;
+            color: #333;
+        }
+
+        .login-page h2 {
+            color: #667eea;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .login-page .login-info {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
         .google-btn {
             background: linear-gradient(135deg, #4285f4 0%, #357ae8 100%);
             color: white;
             border: none;
-            padding: 15px 30px;
-            border-radius: 50px;
+            padding: 15px 25px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 500;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
             width: 100%;
+            max-width: 280px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(66, 133, 244, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
+            min-height: 50px;
         }
-        
+
         .google-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(66, 133, 244, 0.4);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.15);
         }
-        
+
         .google-btn:disabled {
             background: #ccc;
             cursor: not-allowed;
             transform: none;
-            box-shadow: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
         }
 
         .google-icon {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             background: white;
             border-radius: 50%;
             display: flex;
@@ -156,135 +196,226 @@
             justify-content: center;
             color: #4285f4;
             font-weight: bold;
+            font-size: 0.8rem;
         }
-        
-        .home-page {
+
+        /* Hide login button when authenticated */
+        .login-page.authenticated .google-btn {
             display: none;
-            text-align: left;
         }
-        
-        .home-page h1 {
+
+        .login-page.authenticated .login-info {
+            margin-bottom: 2rem;
+        }
+
+        .login-success-message {
+            display: none;
+            color: #28a745;
+            font-size: 1rem;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(40, 167, 69, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(40, 167, 69, 0.2);
+        }
+
+        .login-page.authenticated .login-success-message {
+            display: block;
+        }
+
+        /* Page 4 - Home */
+        .home-page {
+            background: white;
             color: #333;
+            padding: 2rem 1.5rem;
+        }
+
+        .home-page h2 {
+            color: #667eea;
+            font-size: 1.3rem;
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 0.5rem;
         }
 
-        .welcome-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 20px;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .welcome-card h2 {
-            margin-bottom: 0.5rem;
-            font-size: 1.5rem;
-        }
-
-        .welcome-card p {
-            opacity: 0.9;
-            font-size: 0.9rem;
-        }
-        
         .user-info {
             background: rgba(248, 249, 250, 0.8);
-            padding: 1.5rem;
+            padding: 1rem;
             border-radius: 15px;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             border: 1px solid rgba(0,0,0,0.05);
-        }
-        
-        .user-info img {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            margin-bottom: 1rem;
-            border: 3px solid #667eea;
+            text-align: center;
+            width: 100%;
         }
 
-        .user-details {
-            margin-left: 0;
+        .user-info img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 0.5rem;
+            border: 2px solid #667eea;
+            object-fit: cover;
         }
 
         .user-details h3 {
             color: #333;
-            margin-bottom: 0.3rem;
-            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+            font-size: 1rem;
+            word-break: break-word;
         }
 
         .user-details p {
             color: #666;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
+            word-break: break-word;
         }
-        
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            max-width: 280px;
+        }
+
         .btn {
-            padding: 12px 24px;
+            padding: 12px 20px;
             border: none;
-            border-radius: 25px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 500;
-            margin: 5px;
             transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .btn-danger {
-            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
-        }
-        
-        .btn-danger:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(220, 53, 69, 0.4);
-        }
-        
-        .btn-secondary {
-            background: linear-gradient(135deg, #6c757d 0%, #545b62 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
-        }
-        
-        .btn-secondary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(108, 117, 125, 0.4);
-        }
-        
-        .error {
-            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
-            color: #721c24;
-            padding: 12px 16px;
-            border-radius: 10px;
-            margin: 15px 0;
-            display: none;
-            border-left: 4px solid #dc3545;
-        }
-        
-        .success {
-            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
-            color: #155724;
-            padding: 12px 16px;
-            border-radius: 10px;
-            margin: 15px 0;
-            display: none;
-            border-left: 4px solid #28a745;
-        }
-        
-        .loading {
-            display: none;
-            color: #666;
-            margin: 15px 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 6px;
+            min-height: 45px;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #6c757d 0%, #545b62 100%);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Navigation */
+        .nav-container {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 0 1rem;
+            width: calc(100% - 2rem);
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #667eea;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            white-space: nowrap;
+            min-height: 36px;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(255, 255, 255, 1);
+            color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .page-indicators {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .indicator.active {
+            background: rgba(255, 255, 255, 0.8);
+            transform: scale(1.2);
+        }
+
+        /* Messages */
+        .error, .success {
+            padding: 10px 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+            display: none;
+            font-size: 0.8rem;
+            text-align: center;
+            word-break: break-word;
+        }
+
+        .error {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+            border-left: 3px solid #dc3545;
+        }
+
+        .success {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+            border-left: 3px solid #28a745;
+        }
+
+        .loading {
+            display: none;
+            color: #666;
+            margin: 10px 0;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.8rem;
         }
 
         .loading.show {
@@ -292,8 +423,8 @@
         }
 
         .spinner {
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             border: 2px solid #f3f3f3;
             border-top: 2px solid #667eea;
             border-radius: 50%;
@@ -304,7 +435,8 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        
+
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -315,161 +447,226 @@
             background: rgba(0,0,0,0.6);
             z-index: 1000;
             backdrop-filter: blur(5px);
+            padding: 1rem;
         }
-        
+
         .modal-content {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             background: white;
-            padding: 2.5rem;
+            padding: 2rem;
             border-radius: 20px;
             text-align: center;
-            max-width: 400px;
-            width: 90%;
+            max-width: 350px;
+            width: 100%;
             box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
-        
+
         .modal h3 {
             margin-bottom: 1rem;
             color: #dc3545;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
         }
 
         .modal p {
             color: #666;
             line-height: 1.6;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
         }
 
-        .security-note {
-            background: rgba(255, 193, 7, 0.1);
-            border: 1px solid rgba(255, 193, 7, 0.3);
-            border-radius: 10px;
-            padding: 1rem;
+        .modal-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
             margin-top: 1.5rem;
-            font-size: 0.85rem;
-            color: #856404;
         }
 
-        .security-note strong {
-            color: #533601;
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            body {
+                padding: 0.5rem;
+            }
+            
+            .container {
+                width: 400px;
+                height: 400px;
+            }
+            
+            .page {
+                padding: 1.5rem 1rem;
+                height: 400px;
+            }
+            
+            .welcome-page .logo {
+                font-size: 2rem;
+            }
+            
+            .info-page h2 {
+                font-size: 1.4rem;
+            }
+            
+            .nav-container {
+                bottom: 15px;
+                gap: 6px;
+            }
+            
+            .nav-btn {
+                padding: 6px 10px;
+                font-size: 0.7rem;
+            }
         }
 
         @media (max-width: 480px) {
             .container {
-                margin: 1rem;
-                padding: 2rem;
+                width: 350px;
+                height: 350px;
+                border-radius: 15px;
             }
-
-            .logo {
-                font-size: 2.5rem;
+            
+            .page {
+                padding: 1rem;
+                height: 350px;
             }
+            
+            .welcome-page .logo {
+                font-size: 1.8rem;
+            }
+            
+            .modal-content {
+                padding: 1.5rem;
+                border-radius: 15px;
+            }
+            
+            .feature-list li {
+                font-size: 0.75rem;
+            }
+        }
 
-            .features {
-                flex-direction: column;
-                align-items: center;
+        @media (min-width: 769px) {
+            .button-group {
+                flex-direction: row;
+                justify-content: center;
+            }
+            
+            .modal-buttons {
+                flex-direction: row;
+                justify-content: center;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Halaman Login -->
-        <div id="loginPage" class="login-page">
-            <div class="logo">MEGA XO</div>
-            <p class="tagline">Platform Gaming Terdepan</p>
-            
-            <div class="app-description">
-                <h3>🎮 Selamat Datang di Mega XO!</h3>
-                <p>Platform gaming revolusioner yang menggabungkan hiburan dan peluang. Nikmati berbagai permainan seru dengan sistem yang aman dan terpercaya.</p>
-                
-                <div class="features">
-                    <div class="feature">
-                        <span>🎯</span>
-                        <span>Game Seru</span>
-                    </div>
-                    <div class="feature">
-                        <span>🔒</span>
-                        <span>Aman</span>
-                    </div>
-                    <div class="feature">
-                        <span>⚡</span>
-                        <span>Cepat</span>
-                    </div>
-                    <div class="feature">
-                        <span>🏆</span>
-                        <span>Fair Play</span>
+        <!-- Page Indicators -->
+        <div class="page-indicators">
+            <div class="indicator active"></div>
+            <div class="indicator"></div>
+            <div class="indicator"></div>
+            <div class="indicator"></div>
+        </div>
+
+        <!-- Page Container -->
+        <div class="page-container" id="pageContainer">
+            <!-- Page 1: Welcome -->
+            <div class="page welcome-page">
+                <div class="logo">MEGA XO</div>
+                <div class="tagline">🔐 Platform Manajemen Akun</div>
+                <div class="description">
+                    Selamat datang di Mega XO! Di sini Anda dapat login menggunakan akun Google untuk mengakses dashboard pribadi. Platform ini memberikan Anda kontrol penuh atas akun, termasuk kemampuan untuk menghapus akun Mega XO kapan saja jika diperlukan.
+                </div>
+            </div>
+
+            <!-- Page 2: Info -->
+            <div class="page info-page">
+                <h2>🌟 Tentang Mega XO</h2>
+                <div class="info-text">
+                    Di sini Anda dapat mengelola akun Mega XO dengan mudah dan aman. Platform ini menyediakan layanan login menggunakan akun Google untuk kemudahan akses, serta fitur pengelolaan profil yang lengkap.
+                </div>
+                <div class="info-text">
+                    Anda memiliki kontrol penuh terhadap akun Anda. Jika suatu saat Anda ingin menghapus akun Mega XO, fitur tersebut tersedia di dashboard dengan proses yang aman dan mudah. Semua data akan dihapus secara permanen sesuai kebijakan privasi kami.
+                </div>
+               
+            </div>
+
+            <!-- Page 3: Login -->
+            <div class="page login-page" id="loginPage">
+                <h2>🔐 Masuk ke Akun</h2>
+                <div class="login-info">
+                    Login dengan akun Google Anda untuk mengakses dashboard personal. Setelah login, Anda dapat melihat informasi profil, mengelola pengaturan akun, dan jika diperlukan, menghapus akun Mega XO secara permanen.
+                </div>
+
+                <div id="error" class="error"></div>
+                <div id="loading" class="loading">
+                    <div class="spinner"></div>
+                    <span>Sedang login...</span>
+                </div>
+
+                <button id="googleLoginBtn" class="google-btn">
+                    <div class="google-icon">G</div>
+                    Masuk dengan Google
+                </button>
+
+                <div class="login-success-message">
+                    ✅ Login berhasil! Anda sekarang dapat mengakses dashboard untuk mengelola akun.
+                </div>
+            </div>
+
+            <!-- Page 4: Home -->
+            <div class="page home-page">
+                <h2>🏠 Dashboard Pemain</h2>
+
+                <div id="userInfo" class="user-info">
+                    <img id="userAvatar" src="" alt="Avatar">
+                    <div class="user-details">
+                        <h3 id="userName"></h3>
+                        <p id="userEmail"></p>
                     </div>
                 </div>
-                
-                <p><strong>Untuk mulai bermain, silakan login menggunakan akun Google Anda.</strong></p>
-            </div>
 
-            <div id="error" class="error"></div>
-            <div id="loading" class="loading">
-                <div class="spinner"></div>
-                <span>Sedang memproses login...</span>
-            </div>
-            
-            <button id="googleLoginBtn" class="google-btn">
-                <div class="google-icon">G</div>
-                Masuk dengan Google
-            </button>
+                <div class="button-group">
+                    <button id="deleteAccountBtn" class="btn btn-danger">
+                        <span>🗑️</span>
+                        Hapus Akun
+                    </button>
+                    <button id="logoutBtn" class="btn btn-secondary">
+                        <span>🚪</span>
+                        Keluar
+                    </button>
+                </div>
 
-            <div class="security-note">
-                <strong>🔐 Keamanan Terjamin</strong><br>
-                Login menggunakan sistem OAuth Google yang aman. Data pribadi Anda dilindungi dengan enkripsi tingkat enterprise.
+                <div id="homeError" class="error"></div>
+                <div id="homeSuccess" class="success"></div>
             </div>
         </div>
-        
-        <!-- Halaman Home -->
-        <div id="homePage" class="home-page">
-            <div class="welcome-card">
-                <h2>🎉 Selamat Datang di Mega XO!</h2>
-                <p>Anda telah berhasil masuk. Siap untuk memulai petualangan gaming?</p>
-            </div>
 
-            <div id="userInfo" class="user-info">
-                <img id="userAvatar" src="" alt="Avatar">
-                <div class="user-details">
-                    <h3 id="userName"></h3>
-                    <p id="userEmail"></p>
-                </div>
-            </div>
-            
-            <div style="text-align: center;">
-                <button id="deleteAccountBtn" class="btn btn-danger">
-                    <span>🗑️</span>
-                    Hapus Akun
-                </button>
-                <button id="logoutBtn" class="btn btn-secondary">
-                    <span>🚪</span>
-                    Keluar
-                </button>
-            </div>
-            
-            <div id="homeError" class="error"></div>
-            <div id="homeSuccess" class="success"></div>
+        <!-- Navigation -->
+        <div class="nav-container">
+            <button class="nav-btn active" onclick="goToPage(0)">Beranda</button>
+            <button class="nav-btn" onclick="goToPage(1)">Info</button>
+            <button class="nav-btn" onclick="goToPage(2)">Login</button>
+            <button class="nav-btn" onclick="goToPage(3)" id="homeNavBtn" style="display: none;">Dashboard</button>
         </div>
     </div>
-    
+
     <!-- Modal Konfirmasi Hapus Akun -->
     <div id="deleteModal" class="modal">
         <div class="modal-content">
             <h3>⚠️ Konfirmasi Hapus Akun</h3>
-            <p>Apakah Anda yakin ingin menghapus akun Mega XO Anda? Tindakan ini akan menghapus semua data permainan, riwayat, dan progress Anda secara permanen.</p>
+            <p>Apakah Anda yakin ingin menghapus akun Mega XO? Tindakan ini akan menghapus semua data profil, informasi personal, dan riwayat akun Anda secara permanen dari server kami.</p>
+            <p>Setelah akun dihapus, Anda tidak akan dapat mengakses dashboard lagi dan semua informasi yang tersimpan akan hilang secara permanen. Proses penghapusan ini tidak dapat dibatalkan.</p>
             <p><strong>Tindakan ini tidak dapat dibatalkan!</strong></p>
-            <br>
-            <button id="confirmDeleteBtn" class="btn btn-danger">
-                <span>⚠️</span>
-                Ya, Hapus Akun
-            </button>
-            <button id="cancelDeleteBtn" class="btn btn-secondary">
-                <span>❌</span>
-                Batal
-            </button>
+            
+            <div class="modal-buttons">
+                <button id="confirmDeleteBtn" class="btn btn-danger">
+                    <span>⚠️</span> Ya, Hapus Akun
+                </button>
+                <button id="cancelDeleteBtn" class="btn btn-secondary">
+                    <span>❌</span> Batal
+                </button>
+            </div>
         </div>
     </div>
 
@@ -478,15 +675,69 @@
         const pb = new PocketBase('https://megaxo-dev.lightcodedigital.cloud');
         
         // Elemen DOM
+        const pageContainer = document.getElementById('pageContainer');
         const loginPage = document.getElementById('loginPage');
-        const homePage = document.getElementById('homePage');
         const googleLoginBtn = document.getElementById('googleLoginBtn');
         const deleteAccountBtn = document.getElementById('deleteAccountBtn');
         const logoutBtn = document.getElementById('logoutBtn');
         const deleteModal = document.getElementById('deleteModal');
         const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
         const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+        const homeNavBtn = document.getElementById('homeNavBtn');
         
+        // Navigation state
+        let currentPage = 0;
+        const totalPages = 4;
+
+        // Page navigation
+        function goToPage(pageIndex) {
+            if (pageIndex < 0 || pageIndex >= totalPages) return;
+            
+            // Update current page
+            currentPage = pageIndex;
+            
+            // Calculate transform (each page is 25% width)
+            const translateX = -pageIndex * 25;
+            pageContainer.style.transform = `translateX(${translateX}%)`;
+            
+            // Update navigation buttons
+            document.querySelectorAll('.nav-btn').forEach((btn, index) => {
+                btn.classList.toggle('active', index === pageIndex);
+            });
+            
+            // Update indicators
+            document.querySelectorAll('.indicator').forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === pageIndex);
+            });
+        }
+
+        // Update login page UI based on auth state
+        function updateLoginPageUI() {
+            if (pb.authStore.isValid) {
+                loginPage.classList.add('authenticated');
+            } else {
+                loginPage.classList.remove('authenticated');
+            }
+        }
+
+        // Auto navigation based on auth state
+        function updateNavigation() {
+            if (pb.authStore.isValid) {
+                homeNavBtn.style.display = 'block';
+                // Auto go to dashboard if logged in and not already there
+                if (currentPage < 3) {
+                    goToPage(3);
+                }
+            } else {
+                homeNavBtn.style.display = 'none';
+                // Don't allow access to dashboard when not logged in
+                if (currentPage === 3) {
+                    goToPage(2);
+                }
+            }
+            updateLoginPageUI();
+        }
+
         // Fungsi untuk menampilkan pesan error
         function showError(message, isHome = false) {
             const errorEl = isHome ? document.getElementById('homeError') : document.getElementById('error');
@@ -498,13 +749,15 @@
         }
         
         // Fungsi untuk menampilkan pesan sukses
-        function showSuccess(message) {
-            const successEl = document.getElementById('homeSuccess');
-            successEl.textContent = message;
-            successEl.style.display = 'block';
-            setTimeout(() => {
-                successEl.style.display = 'none';
-            }, 4000);
+        function showSuccess(message, isHome = false) {
+            const successEl = isHome ? document.getElementById('homeSuccess') : document.getElementById('success');
+            if (successEl) {
+                successEl.textContent = message;
+                successEl.style.display = 'block';
+                setTimeout(() => {
+                    successEl.style.display = 'none';
+                }, 4000);
+            }
         }
         
         // Fungsi untuk menampilkan loading
@@ -518,29 +771,17 @@
             googleLoginBtn.disabled = show;
         }
         
-        // Fungsi untuk menampilkan halaman berdasarkan status login
-        function showPage() {
-            if (pb.authStore.isValid) {
-                loginPage.style.display = 'none';
-                homePage.style.display = 'block';
-                displayUserInfo();
-            } else {
-                loginPage.style.display = 'block';
-                homePage.style.display = 'none';
-            }
-        }
-        
         // Fungsi untuk menampilkan informasi user
         function displayUserInfo() {
             const user = pb.authStore.model;
             if (user) {
-                document.getElementById('userName').textContent = user.name || user.username || 'Pengguna Mega XO';
+                document.getElementById('userName').textContent = user.name || user.username || 'Pengguna Platform';
                 document.getElementById('userEmail').textContent = user.email;
                 
                 // Avatar dengan fallback yang lebih baik
                 const avatarUrl = user.avatar ? 
                     `https://megaxo-dev.lightcodedigital.cloud/api/files/_pb_users_auth_/${user.id}/${user.avatar}` :
-                    `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name || user.username || 'User')}&background=667eea&color=fff&size=140`;
+                    `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name || user.username || 'User')}&background=667eea&color=fff&size=120`;
                 
                 document.getElementById('userAvatar').src = avatarUrl;
             }
@@ -559,8 +800,9 @@
                     }
                 });
                 
-                showSuccess('🎉 Login berhasil! Selamat datang di Mega XO!');
-                showPage();
+                displayUserInfo();
+                updateNavigation();
+                showSuccess('🎉 Selamat datang di Platform Mega XO! Akun Anda siap digunakan.', true);
                 
             } catch (error) {
                 console.error('Login error:', error);
@@ -583,10 +825,8 @@
         // Logout
         logoutBtn.addEventListener('click', () => {
             pb.authStore.clear();
-            showSuccess('Anda telah keluar dari Mega XO. Sampai jumpa!');
-            setTimeout(() => {
-                showPage();
-            }, 1000);
+            updateNavigation();
+            showSuccess('Terima kasih telah menggunakan Platform Mega XO. Sampai jumpa!', true);
         });
         
         // Tampilkan modal konfirmasi hapus akun
@@ -616,12 +856,8 @@
                 // Tutup modal
                 deleteModal.style.display = 'none';
                 
-                showSuccess('✅ Akun Mega XO berhasil dihapus. Terima kasih telah menggunakan layanan kami.');
-                
-                // Kembali ke halaman login setelah 3 detik
-                setTimeout(() => {
-                    showPage();
-                }, 3000);
+                updateNavigation();
+                showSuccess('✅ Akun Platform Mega XO berhasil dihapus. Terima kasih telah mempercayai layanan kami!', true);
                 
             } catch (error) {
                 console.error('Delete error:', error);
@@ -639,22 +875,27 @@
         
         // Listen untuk perubahan auth state
         pb.authStore.onChange(() => {
-            showPage();
+            updateNavigation();
+            if (pb.authStore.isValid) {
+                displayUserInfo();
+            }
         });
         
-        // Inisialisasi halaman
-        showPage();
+        // Inisialisasi
+        updateNavigation();
+        if (pb.authStore.isValid) {
+            displayUserInfo();
+        }
         
         // Refresh auth token secara otomatis
         setInterval(() => {
             if (pb.authStore.isValid) {
                 pb.collection('users').authRefresh().catch(() => {
-                    // Jika refresh gagal, logout otomatis
                     pb.authStore.clear();
                     showError('Sesi Anda telah berakhir. Silakan login kembali.');
                 });
             }
-        }, 10 * 60 * 1000); // Setiap 10 menit
+        }, 10 * 60 * 1000);
 
         // Error handling untuk koneksi
         window.addEventListener('online', () => {
@@ -665,6 +906,52 @@
 
         window.addEventListener('offline', () => {
             showError('🌐 Koneksi internet terputus. Beberapa fitur mungkin tidak berfungsi.');
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && currentPage > 0) {
+                goToPage(currentPage - 1);
+            } else if (e.key === 'ArrowRight' && currentPage < totalPages - 1) {
+                // Don't allow navigation to dashboard if not logged in
+                if (currentPage === 2 && !pb.authStore.isValid) return;
+                goToPage(currentPage + 1);
+            }
+        });
+
+        // Touch/swipe navigation for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        pageContainer.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        pageContainer.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0 && currentPage < totalPages - 1) {
+                    // Swipe left - go to next page
+                    if (currentPage === 2 && !pb.authStore.isValid) return;
+                    goToPage(currentPage + 1);
+                } else if (diff < 0 && currentPage > 0) {
+                    // Swipe right - go to previous page
+                    goToPage(currentPage - 1);
+                }
+            }
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            // Force recalculation of page position
+            goToPage(currentPage);
         });
     </script>
 </body>
