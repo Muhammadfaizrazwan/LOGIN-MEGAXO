@@ -21,7 +21,8 @@
             align-items: center;
             position: relative;
             overflow: hidden;
-            padding: 1rem;
+            padding: 0.5rem;
+            margin: 0;
         }
 
         body::before {
@@ -38,14 +39,16 @@
         .container {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            width: 500px;
-            height: 500px;
+            width: min(500px, calc(100vw - 1rem));
+            height: min(500px, calc(100vh - 1rem));
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.15);
             position: relative;
             z-index: 1;
             overflow: hidden;
             user-select: none;
+            max-width: calc(100vw - 1rem);
+            max-height: calc(100vh - 1rem);
         }
 
         .page-container {
@@ -57,7 +60,7 @@
 
         .page {
             width: 25%; /* Each page takes 1/4 of container width */
-            height: 500px;
+            height: 100%;
             padding: 2rem;
             display: flex;
             flex-direction: column;
@@ -65,6 +68,8 @@
             align-items: center;
             text-align: center;
             position: relative;
+            min-height: 0;
+            box-sizing: border-box;
         }
 
         /* Page 1 - Welcome */
@@ -74,20 +79,20 @@
         }
 
         .welcome-page .logo {
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 8vw, 2.5rem);
             font-weight: bold;
             margin-bottom: 1rem;
             text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
         .welcome-page .tagline {
-            font-size: 1.1rem;
+            font-size: clamp(0.9rem, 4vw, 1.1rem);
             margin-bottom: 1.5rem;
             opacity: 0.9;
         }
 
         .welcome-page .description {
-            font-size: 0.85rem;
+            font-size: clamp(0.75rem, 3.5vw, 0.85rem);
             line-height: 1.6;
             opacity: 0.8;
             margin-bottom: 2rem;
@@ -101,12 +106,12 @@
 
         .info-page h2 {
             color: #667eea;
-            font-size: 1.6rem;
+            font-size: clamp(1.2rem, 5vw, 1.6rem);
             margin-bottom: 1.5rem;
         }
 
         .info-page .info-text {
-            font-size: 0.9rem;
+            font-size: clamp(0.75rem, 3.5vw, 0.9rem);
             line-height: 1.6;
             color: #666;
             margin-bottom: 1.5rem;
@@ -143,12 +148,12 @@
 
         .login-page h2 {
             color: #667eea;
-            font-size: 1.4rem;
+            font-size: clamp(1.1rem, 4.5vw, 1.4rem);
             margin-bottom: 1rem;
         }
 
         .login-page .login-info {
-            font-size: 0.85rem;
+            font-size: clamp(0.75rem, 3.5vw, 0.85rem);
             color: #666;
             margin-bottom: 1.5rem;
             line-height: 1.5;
@@ -161,14 +166,14 @@
             padding: 15px 25px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: clamp(0.8rem, 3.5vw, 0.9rem);
             font-weight: 500;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
             width: 100%;
-            max-width: 280px;
+            max-width: min(280px, calc(100vw - 4rem));
             transition: all 0.3s ease;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
             min-height: 50px;
@@ -211,7 +216,7 @@
         .login-success-message {
             display: none;
             color: #28a745;
-            font-size: 1rem;
+            font-size: clamp(0.8rem, 3.5vw, 1rem);
             margin-top: 1rem;
             padding: 1rem;
             background: rgba(40, 167, 69, 0.1);
@@ -487,93 +492,35 @@
         /* Responsive adjustments for smaller screens */
         @media (max-width: 768px) {
             body {
-                padding: 0.5rem;
+                padding: 0.25rem;
             }
             
             .container {
-                width: min(400px, calc(100vw - 1rem));
-                height: min(400px, calc(100vh - 2rem));
-                max-width: 100%;
-                max-height: 90vh;
+                width: calc(100vw - 0.5rem);
+                height: calc(100vh - 0.5rem);
+                border-radius: 15px;
+                min-height: 400px;
             }
             
             .page {
-                padding: 1.5rem 1rem;
-                height: min(400px, calc(100vh - 2rem));
-            }
-            
-            .welcome-page .logo {
-                font-size: clamp(1.8rem, 6vw, 2rem);
-            }
-            
-            .welcome-page .tagline {
-                font-size: clamp(1rem, 4vw, 1.1rem);
-            }
-            
-            .welcome-page .description {
-                font-size: clamp(0.8rem, 3.5vw, 0.85rem);
-            }
-            
-            .info-page h2 {
-                font-size: clamp(1.2rem, 5vw, 1.4rem);
-            }
-            
-            .info-page .info-text {
-                font-size: clamp(0.8rem, 3vw, 0.9rem);
-            }
-            
-            .login-page h2 {
-                font-size: clamp(1.2rem, 4vw, 1.4rem);
-            }
-            
-            .login-page .login-info {
-                font-size: clamp(0.8rem, 3vw, 0.85rem);
-            }
-            
-            .google-btn {
-                padding: 12px 20px;
-                font-size: clamp(0.8rem, 3vw, 0.9rem);
-                max-width: 250px;
-            }
-            
-            .home-page h2 {
-                font-size: clamp(1.1rem, 4vw, 1.3rem);
-            }
-            
-            .user-info img {
-                width: 50px;
-                height: 50px;
-            }
-            
-            .user-details h3 {
-                font-size: clamp(0.85rem, 3vw, 1rem);
-            }
-            
-            .user-details p {
-                font-size: clamp(0.75rem, 2.5vw, 0.8rem);
-            }
-            
-            .btn {
-                font-size: clamp(0.75rem, 2.8vw, 0.8rem);
-                padding: 10px 16px;
-                min-height: 40px;
+                padding: 1rem 0.75rem;
             }
             
             .nav-container {
-                bottom: 15px;
+                bottom: 10px;
                 gap: 4px;
                 padding: 0 0.5rem;
             }
             
             .nav-btn {
                 padding: 6px 8px;
-                font-size: clamp(0.65rem, 2.5vw, 0.7rem);
+                font-size: clamp(0.65rem, 2.8vw, 0.7rem);
                 min-height: 32px;
             }
             
             .page-indicators {
-                top: 15px;
-                right: 15px;
+                top: 10px;
+                right: 10px;
             }
             
             .indicator {
@@ -583,224 +530,81 @@
         }
 
         @media (max-width: 480px) {
-            body {
-                padding: 0.25rem;
-            }
-            
-            .container {
-                width: calc(100vw - 0.5rem);
-                height: min(380px, calc(100vh - 1rem));
-                border-radius: 12px;
-                min-width: 280px;
-            }
-            
             .page {
-                padding: 1rem 0.75rem;
-                height: min(380px, calc(100vh - 1rem));
+                padding: 0.75rem 0.5rem;
             }
             
-            .welcome-page .logo {
-                font-size: clamp(1.5rem, 7vw, 1.8rem);
-                margin-bottom: 0.8rem;
-            }
-            
-            .welcome-page .tagline {
-                font-size: clamp(0.9rem, 4vw, 1rem);
-                margin-bottom: 1rem;
-            }
-            
-            .welcome-page .description {
-                font-size: clamp(0.75rem, 3.5vw, 0.8rem);
-                margin-bottom: 1.5rem;
-                line-height: 1.5;
-            }
-            
-            .info-page h2 {
-                font-size: clamp(1.1rem, 5vw, 1.2rem);
-                margin-bottom: 1rem;
-            }
-            
-            .info-page .info-text {
-                font-size: clamp(0.75rem, 3.2vw, 0.8rem);
-                margin-bottom: 1rem;
-                line-height: 1.5;
-            }
-            
-            .login-page h2 {
-                font-size: clamp(1.1rem, 4.5vw, 1.2rem);
-                margin-bottom: 0.8rem;
-            }
-            
+            .welcome-page .description,
+            .info-page .info-text,
             .login-page .login-info {
-                font-size: clamp(0.75rem, 3.2vw, 0.8rem);
-                margin-bottom: 1.2rem;
-                line-height: 1.4;
+                margin-bottom: 1rem;
+                padding: 0 0.5rem;
             }
             
             .google-btn {
-                padding: 10px 16px;
-                font-size: clamp(0.75rem, 3.2vw, 0.8rem);
-                min-height: 44px;
-                max-width: 220px;
-            }
-            
-            .google-icon {
-                width: 16px;
-                height: 16px;
-                font-size: 0.7rem;
-            }
-            
-            .login-success-message {
-                font-size: clamp(0.8rem, 3.2vw, 0.85rem);
-                padding: 0.8rem;
-                margin-top: 0.8rem;
-            }
-            
-            .home-page {
-                padding: 1rem 0.75rem;
-            }
-            
-            .home-page h2 {
-                font-size: clamp(1rem, 4vw, 1.1rem);
-                margin-bottom: 0.8rem;
-            }
-            
-            .user-info {
-                padding: 0.8rem;
-                margin-bottom: 1rem;
-            }
-            
-            .user-info img {
-                width: 45px;
-                height: 45px;
-            }
-            
-            .user-details h3 {
-                font-size: clamp(0.8rem, 3.2vw, 0.9rem);
-            }
-            
-            .user-details p {
-                font-size: clamp(0.7rem, 2.8vw, 0.75rem);
-            }
-            
-            .button-group {
-                max-width: 200px;
-                gap: 8px;
-            }
-            
-            .btn {
-                font-size: clamp(0.7rem, 3vw, 0.75rem);
-                padding: 8px 12px;
-                min-height: 36px;
+                max-width: calc(100vw - 3rem);
+                margin: 0 auto;
             }
             
             .nav-container {
-                bottom: 10px;
-                gap: 3px;
+                bottom: 8px;
+                gap: 2px;
                 padding: 0 0.25rem;
                 flex-wrap: wrap;
             }
             
             .nav-btn {
                 padding: 4px 6px;
-                font-size: clamp(0.6rem, 2.8vw, 0.65rem);
+                font-size: clamp(0.6rem, 2.5vw, 0.65rem);
                 min-height: 28px;
-                border-radius: 6px;
-            }
-            
-            .page-indicators {
-                top: 10px;
-                right: 10px;
-                gap: 6px;
-            }
-            
-            .indicator {
-                width: 5px;
-                height: 5px;
-            }
-            
-            .modal-content {
-                padding: 1.25rem 1rem;
-                border-radius: 12px;
-                margin: 0 0.5rem;
-                max-width: calc(100vw - 1rem);
-            }
-            
-            .modal h3 {
-                font-size: clamp(1rem, 4vw, 1.1rem);
-            }
-            
-            .modal p {
-                font-size: clamp(0.75rem, 3.2vw, 0.8rem);
-            }
-            
-            .modal-buttons {
-                gap: 8px;
-            }
-            
-            .error, .success {
-                font-size: clamp(0.7rem, 3vw, 0.75rem);
-                padding: 8px 10px;
-            }
-            
-            .loading {
-                font-size: clamp(0.7rem, 3vw, 0.75rem);
+                flex: 1;
+                min-width: 60px;
             }
         }
 
-        /* Very small screens */
-        @media (max-width: 320px) {
+        @media (max-width: 360px) {
             .container {
-                width: calc(100vw - 0.5rem);
-                height: min(350px, calc(100vh - 1rem));
-                min-height: 300px;
+                width: calc(100vw - 0.25rem);
+                height: calc(100vh - 0.25rem);
+                border-radius: 12px;
             }
             
             .page {
-                height: min(350px, calc(100vh - 1rem));
-                padding: 0.8rem 0.5rem;
+                padding: 0.5rem 0.25rem;
             }
             
-            .nav-btn {
-                padding: 3px 4px;
-                font-size: 0.6rem;
-                min-height: 24px;
-            }
-            
-            .google-btn {
-                max-width: 180px;
-                min-height: 40px;
-            }
-            
-            .button-group {
-                max-width: 160px;
+            .welcome-page .description,
+            .info-page .info-text,
+            .login-page .login-info {
+                padding: 0 0.25rem;
+                line-height: 1.4;
             }
         }
 
         /* Landscape orientation for mobile */
         @media (max-height: 500px) and (orientation: landscape) {
             .container {
-                height: calc(100vh - 0.5rem);
-                max-height: none;
+                height: calc(100vh - 0.25rem);
             }
             
             .page {
-                height: calc(100vh - 0.5rem);
                 padding: 0.5rem;
+                justify-content: flex-start;
+                padding-top: 1rem;
             }
             
             .nav-container {
-                bottom: 8px;
+                bottom: 5px;
             }
             
             .page-indicators {
-                top: 8px;
+                top: 5px;
             }
             
             .welcome-page .description,
             .info-page .info-text,
             .login-page .login-info {
-                margin-bottom: 0.8rem;
+                margin-bottom: 0.5rem;
             }
         }
 
@@ -834,7 +638,7 @@
                 <div class="logo">MEGA XO</div>
                 <div class="tagline">🔐 Platform Manajemen Akun</div>
                 <div class="description">
-                    Selamat datang di Mega XO! Di sini Anda dapat login menggunakan akun Google untuk mengakses dashboard pribadi. Platform ini memberikan Anda kontrol penuh atas akun, termasuk kemampuan untuk menghapus akun Mega XO kapan saja jika diperlukan. Sistem keamanan terjamin dengan enkripsi data tingkat tinggi.
+                    Selamat datang di Mega XO! Di sini Anda dapat login menggunakan akun Google untuk mengakses dashboard pribadi. Platform ini memberikan Anda kontrol penuh atas akun, termasuk kemampuan untuk menghapus akun Mega XO kapan saja jika diperlukan..
                 </div>
             </div>
 
@@ -846,9 +650,6 @@
                 </div>
                 <div class="info-text">
                     Anda memiliki kontrol penuh terhadap akun Anda. Jika suatu saat Anda ingin menghapus akun Mega XO, fitur tersebut tersedia di dashboard dengan proses yang aman dan mudah. Semua data akan dihapus secara permanen sesuai kebijakan privasi kami.
-                </div>
-                <div class="info-text">
-                    Keamanan data adalah prioritas utama kami. Dengan integrasi Google OAuth, informasi login Anda terlindungi dengan standar keamanan tinggi, dan Anda dapat mengelola preferensi akun kapan saja melalui dashboard yang intuitif.
                 </div>
             </div>
 
