@@ -491,57 +491,316 @@
             }
             
             .container {
-                width: 400px;
-                height: 400px;
+                width: min(400px, calc(100vw - 1rem));
+                height: min(400px, calc(100vh - 2rem));
+                max-width: 100%;
+                max-height: 90vh;
             }
             
             .page {
                 padding: 1.5rem 1rem;
-                height: 400px;
+                height: min(400px, calc(100vh - 2rem));
             }
             
             .welcome-page .logo {
-                font-size: 2rem;
+                font-size: clamp(1.8rem, 6vw, 2rem);
+            }
+            
+            .welcome-page .tagline {
+                font-size: clamp(1rem, 4vw, 1.1rem);
+            }
+            
+            .welcome-page .description {
+                font-size: clamp(0.8rem, 3.5vw, 0.85rem);
             }
             
             .info-page h2 {
-                font-size: 1.4rem;
+                font-size: clamp(1.2rem, 5vw, 1.4rem);
+            }
+            
+            .info-page .info-text {
+                font-size: clamp(0.8rem, 3vw, 0.9rem);
+            }
+            
+            .login-page h2 {
+                font-size: clamp(1.2rem, 4vw, 1.4rem);
+            }
+            
+            .login-page .login-info {
+                font-size: clamp(0.8rem, 3vw, 0.85rem);
+            }
+            
+            .google-btn {
+                padding: 12px 20px;
+                font-size: clamp(0.8rem, 3vw, 0.9rem);
+                max-width: 250px;
+            }
+            
+            .home-page h2 {
+                font-size: clamp(1.1rem, 4vw, 1.3rem);
+            }
+            
+            .user-info img {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .user-details h3 {
+                font-size: clamp(0.85rem, 3vw, 1rem);
+            }
+            
+            .user-details p {
+                font-size: clamp(0.75rem, 2.5vw, 0.8rem);
+            }
+            
+            .btn {
+                font-size: clamp(0.75rem, 2.8vw, 0.8rem);
+                padding: 10px 16px;
+                min-height: 40px;
             }
             
             .nav-container {
                 bottom: 15px;
-                gap: 6px;
+                gap: 4px;
+                padding: 0 0.5rem;
             }
             
             .nav-btn {
-                padding: 6px 10px;
-                font-size: 0.7rem;
+                padding: 6px 8px;
+                font-size: clamp(0.65rem, 2.5vw, 0.7rem);
+                min-height: 32px;
+            }
+            
+            .page-indicators {
+                top: 15px;
+                right: 15px;
+            }
+            
+            .indicator {
+                width: 6px;
+                height: 6px;
             }
         }
 
         @media (max-width: 480px) {
+            body {
+                padding: 0.25rem;
+            }
+            
             .container {
-                width: 350px;
-                height: 350px;
-                border-radius: 15px;
+                width: calc(100vw - 0.5rem);
+                height: min(380px, calc(100vh - 1rem));
+                border-radius: 12px;
+                min-width: 280px;
             }
             
             .page {
-                padding: 1rem;
-                height: 350px;
+                padding: 1rem 0.75rem;
+                height: min(380px, calc(100vh - 1rem));
             }
             
             .welcome-page .logo {
-                font-size: 1.8rem;
+                font-size: clamp(1.5rem, 7vw, 1.8rem);
+                margin-bottom: 0.8rem;
+            }
+            
+            .welcome-page .tagline {
+                font-size: clamp(0.9rem, 4vw, 1rem);
+                margin-bottom: 1rem;
+            }
+            
+            .welcome-page .description {
+                font-size: clamp(0.75rem, 3.5vw, 0.8rem);
+                margin-bottom: 1.5rem;
+                line-height: 1.5;
+            }
+            
+            .info-page h2 {
+                font-size: clamp(1.1rem, 5vw, 1.2rem);
+                margin-bottom: 1rem;
+            }
+            
+            .info-page .info-text {
+                font-size: clamp(0.75rem, 3.2vw, 0.8rem);
+                margin-bottom: 1rem;
+                line-height: 1.5;
+            }
+            
+            .login-page h2 {
+                font-size: clamp(1.1rem, 4.5vw, 1.2rem);
+                margin-bottom: 0.8rem;
+            }
+            
+            .login-page .login-info {
+                font-size: clamp(0.75rem, 3.2vw, 0.8rem);
+                margin-bottom: 1.2rem;
+                line-height: 1.4;
+            }
+            
+            .google-btn {
+                padding: 10px 16px;
+                font-size: clamp(0.75rem, 3.2vw, 0.8rem);
+                min-height: 44px;
+                max-width: 220px;
+            }
+            
+            .google-icon {
+                width: 16px;
+                height: 16px;
+                font-size: 0.7rem;
+            }
+            
+            .login-success-message {
+                font-size: clamp(0.8rem, 3.2vw, 0.85rem);
+                padding: 0.8rem;
+                margin-top: 0.8rem;
+            }
+            
+            .home-page {
+                padding: 1rem 0.75rem;
+            }
+            
+            .home-page h2 {
+                font-size: clamp(1rem, 4vw, 1.1rem);
+                margin-bottom: 0.8rem;
+            }
+            
+            .user-info {
+                padding: 0.8rem;
+                margin-bottom: 1rem;
+            }
+            
+            .user-info img {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .user-details h3 {
+                font-size: clamp(0.8rem, 3.2vw, 0.9rem);
+            }
+            
+            .user-details p {
+                font-size: clamp(0.7rem, 2.8vw, 0.75rem);
+            }
+            
+            .button-group {
+                max-width: 200px;
+                gap: 8px;
+            }
+            
+            .btn {
+                font-size: clamp(0.7rem, 3vw, 0.75rem);
+                padding: 8px 12px;
+                min-height: 36px;
+            }
+            
+            .nav-container {
+                bottom: 10px;
+                gap: 3px;
+                padding: 0 0.25rem;
+                flex-wrap: wrap;
+            }
+            
+            .nav-btn {
+                padding: 4px 6px;
+                font-size: clamp(0.6rem, 2.8vw, 0.65rem);
+                min-height: 28px;
+                border-radius: 6px;
+            }
+            
+            .page-indicators {
+                top: 10px;
+                right: 10px;
+                gap: 6px;
+            }
+            
+            .indicator {
+                width: 5px;
+                height: 5px;
             }
             
             .modal-content {
-                padding: 1.5rem;
-                border-radius: 15px;
+                padding: 1.25rem 1rem;
+                border-radius: 12px;
+                margin: 0 0.5rem;
+                max-width: calc(100vw - 1rem);
             }
             
-            .feature-list li {
-                font-size: 0.75rem;
+            .modal h3 {
+                font-size: clamp(1rem, 4vw, 1.1rem);
+            }
+            
+            .modal p {
+                font-size: clamp(0.75rem, 3.2vw, 0.8rem);
+            }
+            
+            .modal-buttons {
+                gap: 8px;
+            }
+            
+            .error, .success {
+                font-size: clamp(0.7rem, 3vw, 0.75rem);
+                padding: 8px 10px;
+            }
+            
+            .loading {
+                font-size: clamp(0.7rem, 3vw, 0.75rem);
+            }
+        }
+
+        /* Very small screens */
+        @media (max-width: 320px) {
+            .container {
+                width: calc(100vw - 0.5rem);
+                height: min(350px, calc(100vh - 1rem));
+                min-height: 300px;
+            }
+            
+            .page {
+                height: min(350px, calc(100vh - 1rem));
+                padding: 0.8rem 0.5rem;
+            }
+            
+            .nav-btn {
+                padding: 3px 4px;
+                font-size: 0.6rem;
+                min-height: 24px;
+            }
+            
+            .google-btn {
+                max-width: 180px;
+                min-height: 40px;
+            }
+            
+            .button-group {
+                max-width: 160px;
+            }
+        }
+
+        /* Landscape orientation for mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .container {
+                height: calc(100vh - 0.5rem);
+                max-height: none;
+            }
+            
+            .page {
+                height: calc(100vh - 0.5rem);
+                padding: 0.5rem;
+            }
+            
+            .nav-container {
+                bottom: 8px;
+            }
+            
+            .page-indicators {
+                top: 8px;
+            }
+            
+            .welcome-page .description,
+            .info-page .info-text,
+            .login-page .login-info {
+                margin-bottom: 0.8rem;
             }
         }
 
@@ -575,7 +834,7 @@
                 <div class="logo">MEGA XO</div>
                 <div class="tagline">🔐 Platform Manajemen Akun</div>
                 <div class="description">
-                    Selamat datang di Mega XO! Di sini Anda dapat login menggunakan akun Google untuk mengakses dashboard pribadi. Platform ini memberikan Anda kontrol penuh atas akun, termasuk kemampuan untuk menghapus akun Mega XO kapan saja jika diperlukan.
+                    Selamat datang di Mega XO! Di sini Anda dapat login menggunakan akun Google untuk mengakses dashboard pribadi. Platform ini memberikan Anda kontrol penuh atas akun, termasuk kemampuan untuk menghapus akun Mega XO kapan saja jika diperlukan. Sistem keamanan terjamin dengan enkripsi data tingkat tinggi.
                 </div>
             </div>
 
@@ -588,14 +847,16 @@
                 <div class="info-text">
                     Anda memiliki kontrol penuh terhadap akun Anda. Jika suatu saat Anda ingin menghapus akun Mega XO, fitur tersebut tersedia di dashboard dengan proses yang aman dan mudah. Semua data akan dihapus secara permanen sesuai kebijakan privasi kami.
                 </div>
-               
+                <div class="info-text">
+                    Keamanan data adalah prioritas utama kami. Dengan integrasi Google OAuth, informasi login Anda terlindungi dengan standar keamanan tinggi, dan Anda dapat mengelola preferensi akun kapan saja melalui dashboard yang intuitif.
+                </div>
             </div>
 
             <!-- Page 3: Login -->
             <div class="page login-page" id="loginPage">
                 <h2>🔐 Masuk ke Akun</h2>
                 <div class="login-info">
-                    Login dengan akun Google Anda untuk mengakses dashboard personal. Setelah login, Anda dapat melihat informasi profil, mengelola pengaturan akun, dan jika diperlukan, menghapus akun Mega XO secara permanen.
+                    Login dengan akun Google Anda untuk mengakses dashboard personal. Setelah login, Anda dapat melihat informasi profil, mengelola pengaturan akun, dan jika diperlukan, menghapus akun Mega XO secara permanen. Semua data Anda akan terlindungi dengan standar keamanan Google OAuth yang terpercaya.
                 </div>
 
                 <div id="error" class="error"></div>
